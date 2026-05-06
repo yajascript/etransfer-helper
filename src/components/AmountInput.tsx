@@ -52,13 +52,13 @@ export function AmountInput({ value, onChange, label, limitLabel, max = 25000 }:
   return (
     <div className="flex flex-col gap-2">
       <div className="flex justify-between items-center">
-        <label className="text-[10px] font-black text-stone-300 uppercase tracking-widest">{label}</label>
+        <label className="text-[10px] font-black text-muted uppercase tracking-widest">{label}</label>
         {isOverLimit && (
           <span className="text-[10px] font-bold text-red-500 uppercase animate-pulse">{limitLabel}: ${max.toLocaleString()}</span>
         )}
       </div>
-      <div className={`relative flex items-center border-b-2 transition-colors ${isOverLimit ? 'border-red-500' : 'border-[#eee] focus-within:border-primary'}`}>
-        <span className={`text-[24px] font-semibold pr-3 transition-colors ${isOverLimit ? 'text-red-500' : 'text-stone-300'}`}>$</span>
+      <div className={`relative flex items-center border-b-2 transition-colors ${isOverLimit ? 'border-red-500' : 'border-foreground/10 focus-within:border-primary'}`}>
+        <span className={`text-[24px] font-semibold pr-3 transition-colors ${isOverLimit ? 'text-red-500' : 'text-muted'}`}>$</span>
         <input
           type="text"
           inputMode="decimal"

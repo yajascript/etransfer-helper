@@ -1,14 +1,28 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8fafd;
+  --background: #f1f4f8;
   --foreground: #2c3e50;
   --primary: #00695c;
   --primary-hover: #004d40;
   --card-bg: #ffffff;
   --text-muted: #7f8c8d;
-  --input-bg: #f1f3f5;
+  --input-bg: #e2e8f0;
   --border-radius: 12px;
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.5);
+}
+
+:root.dark {
+  --background: #0f172a;
+  --foreground: #f8fafc;
+  --primary: #2dd4bf;
+  --primary-hover: #5eead4;
+  --card-bg: #1e293b;
+  --text-muted: #94a3b8;
+  --input-bg: #334155;
+  --glass-bg: rgba(30, 41, 59, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
 }
 
 @theme {
@@ -26,6 +40,15 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
 }
 
 @keyframes fadeIn {

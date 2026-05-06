@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} antialiased`}>
-      <body className="font-sans bg-[#f8fafd] text-[#2c3e50]">
+      <body className="font-sans">
         {children}
         <Analytics />
         <SpeedInsights />
