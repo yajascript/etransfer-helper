@@ -177,11 +177,17 @@ export default function Home() {
             placeholder={t("home.securityPlaceholder")}
           />
 
-          {isDirty && (
-            <button onClick={clearForm} className="text-muted hover:text-red-500 text-[11px] font-black uppercase tracking-[0.2em] transition-colors pt-2 self-center">
-              {t("home.clearBtn")}
-            </button>
-          )}
+          <button 
+            onClick={clearForm} 
+            disabled={!isDirty}
+            className={`text-[11px] font-black uppercase tracking-[0.2em] transition-all pt-2 self-center ${
+              isDirty 
+                ? "text-muted hover:text-red-500 cursor-pointer" 
+                : "text-muted/20 cursor-default"
+            }`}
+          >
+            {t("home.clearBtn")}
+          </button>
         </div>
 
         {qrVisible && (

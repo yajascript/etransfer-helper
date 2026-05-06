@@ -2,17 +2,22 @@
 
 import { useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
+import Link from "next/link";
 import { Language, TranslationKey, getTranslation } from "@/translations";
 import { Header } from "@/components/Header";
 import { InfoCard } from "@/components/InfoCard";
 
 const BANKS = [
-  { name: "RBC Mobile", url: "https://www.rbcroyalbank.com/onlinebanking/" },
-  { name: "TD Bank", url: "https://easyweb.td.com/" },
-  { name: "BMO App", url: "https://www.bmo.com/onlinebanking" },
-  { name: "Scotiabank", url: "https://www.scotiabank.com/online-banking/" },
-  { name: "CIBC", url: "https://www.cibc.com/online-banking/" },
-  { name: "Desjardins", url: "https://www.desjardins.com/accest/" },
+  { name: "RBC", url: "rbcmobile://", package: "com.rbc.mobile.android", web: "https://www.rbcroyalbank.com/onlinebanking/" },
+  { name: "TD", url: "tdmobile://", package: "com.td", web: "https://easyweb.td.com/" },
+  { name: "BMO", url: "bmomobile://", package: "com.bmo.mobile", web: "https://www.bmo.com/onlinebanking" },
+  { name: "Scotiabank", url: "scotiabank://", package: "com.scotiabank.banking", web: "https://www.scotiabank.com/online-banking/" },
+  { name: "CIBC", url: "cibcmobile://", package: "com.cibc.android.mobi", web: "https://www.cibc.com/online-banking/" },
+  { name: "Desjardins", url: "desjardins://", package: "com.desjardins.mobile", web: "https://www.desjardins.com/accest/" },
+  { name: "Tangerine", url: "tangerine://", package: "com.tangerine.android", web: "https://www.tangerine.ca/" },
+  { name: "National Bank", url: "bnc://", package: "ca.bnc.mobile", web: "https://www.nbc.ca/" },
+  { name: "Simplii", url: "simpliimobile://", package: "com.cibc.simplii", web: "https://www.simplii.com/" },
+  { name: "EQ Bank", url: "eqbank://", package: "com.eqbank.eqbank", web: "https://www.eqbank.ca/" },
 ];
 
 function PaymentContent() {
@@ -105,9 +110,36 @@ function PaymentContent() {
               <a 
                 key={bank.name} 
                 href={bank.url}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="bg-input border border-foreground/5 text-foreground/70 font-bold text-[13px] py-4 rounded-2xl hover:bg-primary hover:text-white transition-all flex items-center justify-center text-center shadow-sm"
+                onClick={(e) => {
+                  const ua = navigator.userAgent;
+                  const isAndroid = /Android/i.test(ua);
+                  const isiOS = /iPhone|iPad|iPod/i.test(ua);
+                  
+                  if (!isAndroid && !isiOS) {
+                    e.preventDefault();
+                    window.open(bank.web, "_blank");
+                    return;
+                  }
+
+                  // Deep link handling
+                  const start = Date.now();
+                  
+                  if (isAndroid) {
+                    e.preventDefault();
+                    // Robust Android Intent: Open app by package, fallback to Play Store if not installed
+                    const intent = `intent:#Intent;package=${bank.package};action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;end`;
+                    window.location.href = intent;
+                  }
+                  // On iOS, we let the default href (bank.url) do its thing.
+                  
+                  setTimeout(() => {
+                    const elapsed = Date.now() - start;
+                    if (document.hasFocus() && elapsed < 3000) {
+                      window.location.href = bank.web;
+                    }
+                  }, 2500);
+                }}
               >
                 {bank.name}
               </a>
@@ -157,6 +189,17 @@ function PaymentContent() {
               </div>
             </div>
           </div>
+        </section>
+
+        {/* Growth CTA */}
+        <section className="w-full flex flex-col items-center gap-4 py-8 animate-in" style={{ animationDelay: '0.4s' }}>
+          <p className="text-muted text-[13px] font-bold text-center">{t("pay.footerTitle")}</p>
+          <Link 
+            href="/"
+            className="glass px-8 py-4 rounded-2xl text-primary font-black text-[14px] hover:scale-[1.05] active:scale-[0.95] transition-all shadow-lg border-primary/10"
+          >
+            {t("pay.footerBtn")}
+          </Link>
         </section>
       </div>
     </main>
