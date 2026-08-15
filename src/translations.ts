@@ -46,6 +46,8 @@ export const translations = {
     "common.copiedShort": "COPIED",
     "common.gotIt": "Got it",
     "common.close": "Close",
+    "common.support": "Support the Developer",
+    "common.buyCoffee": "Buy the developer a coffee",
   },
   fr: {
     "home.header": "Assistant Virement",
@@ -94,6 +96,8 @@ export const translations = {
     "common.copiedShort": "COPIÉ",
     "common.gotIt": "Compris",
     "common.close": "Fermer",
+    "common.support": "Soutenir le développeur",
+    "common.buyCoffee": "Offrir un café au développeur",
   },
 };
 

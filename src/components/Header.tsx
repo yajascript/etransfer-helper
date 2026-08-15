@@ -30,7 +30,32 @@ export function Header({ lang, onHelpClick }: HeaderProps) {
         </h1>
       </Link>
 
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2.5">
+        <a
+          href="https://donate.stripe.com/fZu5kCbeB8vW82I8RcfAc02"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="glass w-8 h-8 rounded-full flex items-center justify-center text-foreground/75 hover:text-primary hover:border-primary/40 transition-all font-black text-[13px] shadow-sm active:scale-90"
+          aria-label={t("common.support")}
+          title={t("common.buyCoffee")}
+        >
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M17 8h1a4 4 0 1 1 0 8h-1" />
+            <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z" />
+            <line x1="6" y1="2" x2="6" y2="4" />
+            <line x1="10" y1="2" x2="10" y2="4" />
+            <line x1="14" y1="2" x2="14" y2="4" />
+          </svg>
+        </a>
         {onHelpClick && (
           <button
             type="button"

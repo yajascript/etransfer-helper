@@ -7,6 +7,7 @@ import { Language, TranslationKey, getTranslation } from "@/translations";
 import { Header } from "@/components/Header";
 import { InfoCard } from "@/components/InfoCard";
 import { HowToPayModal } from "@/components/HowToPayModal";
+import { BuyMeACoffee } from "@/components/BuyMeACoffee";
 
 const BANKS = [
   { name: "RBC", url: "rbcmobile://", package: "com.rbc.mobile.android", web: "https://www.rbcroyalbank.com/onlinebanking/" },
@@ -168,6 +169,11 @@ function PaymentContent() {
             {t("pay.footerBtn")}
           </Link>
         </section>
+
+        {/* Support / Buy Me a Coffee */}
+        <div className="flex justify-center pt-2 pb-4 animate-in" style={{ animationDelay: '0.4s' }}>
+          <BuyMeACoffee lang={lang} />
+        </div>
       </div>
     </main>
   );

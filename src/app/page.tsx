@@ -8,6 +8,7 @@ import { AmountInput } from "@/components/AmountInput";
 import { EmailInput } from "@/components/EmailInput";
 import { SecurityField } from "@/components/SecurityField";
 import { QRDisplay } from "@/components/QRDisplay";
+import { BuyMeACoffee } from "@/components/BuyMeACoffee";
 
 export default function Home() {
   const [lang, setLang] = useState<Language>("en");
@@ -199,6 +200,10 @@ export default function Home() {
             t={t}
           />
         )}
+
+        <div className="flex justify-center pt-2 pb-4">
+          <BuyMeACoffee lang={lang} />
+        </div>
       </div>
     </main>
   );
