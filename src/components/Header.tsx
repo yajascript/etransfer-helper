@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Language, TranslationKey, getTranslation } from "@/translations";
-import { ThemeToggle } from "./ThemeToggle";
+import { DarkModeToggle } from "./DarkModeToggle";
 
 interface HeaderProps {
   lang: Language;
@@ -42,7 +42,7 @@ export function Header({ lang, onHelpClick }: HeaderProps) {
             ?
           </button>
         )}
-        <ThemeToggle />
+        <DarkModeToggle />
       </div>
     </div>
   );
