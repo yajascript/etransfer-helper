@@ -6,10 +6,11 @@ import { ThemeToggle } from "./ThemeToggle";
 
 interface HeaderProps {
   lang: Language;
+  onHelpClick?: () => void;
   onLanguageChange?: (lang: Language) => void;
 }
 
-export function Header({ lang }: HeaderProps) {
+export function Header({ lang, onHelpClick }: HeaderProps) {
   const t = (key: TranslationKey) => getTranslation(lang, key);
   const brandName = t("home.header");
   const [first, ...rest] = brandName.split(" ");
@@ -29,7 +30,20 @@ export function Header({ lang }: HeaderProps) {
         </h1>
       </Link>
 
-      <ThemeToggle />
+      <div className="flex items-center gap-3">
+        {onHelpClick && (
+          <button
+            type="button"
+            onClick={onHelpClick}
+            className="glass w-8 h-8 rounded-full flex items-center justify-center text-foreground/75 hover:text-primary hover:border-primary/40 transition-all font-black text-[13px] shadow-sm active:scale-90"
+            aria-label="How to pay help"
+            title="How to Pay"
+          >
+            ?
+          </button>
+        )}
+        <ThemeToggle />
+      </div>
     </div>
   );
 }

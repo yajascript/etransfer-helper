@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Language, TranslationKey, getTranslation } from "@/translations";
 import { Header } from "@/components/Header";
 import { InfoCard } from "@/components/InfoCard";
+import { HowToPayModal } from "@/components/HowToPayModal";
 
 const BANKS = [
   { name: "RBC", url: "rbcmobile://", package: "com.rbc.mobile.android", web: "https://www.rbcroyalbank.com/onlinebanking/" },
@@ -30,6 +31,7 @@ function PaymentContent() {
   const security = searchParams.get("security");
 
   const [copiedField, setCopiedField] = useState<string | null>(null);
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
 
   const t = (key: TranslationKey) => getTranslation(lang, key);
 
@@ -46,7 +48,16 @@ function PaymentContent() {
 
   return (
     <main className="min-h-screen flex flex-col items-center px-6 md:px-10 pt-12 md:pt-20 pb-24 gap-8">
-      <Header lang={lang} />
+      <Header lang={lang} onHelpClick={() => setIsHelpOpen(true)} />
+
+      <HowToPayModal 
+        isOpen={isHelpOpen}
+        onClose={() => setIsHelpOpen(false)}
+        lang={lang}
+        autodeposit={autodeposit}
+        securityAnswer={security}
+        message={message}
+      />
 
       <div className="w-full max-w-[440px] flex flex-col gap-8">
         {/* Payment Details */}
@@ -147,52 +158,8 @@ function PaymentContent() {
           </div>
         </section>
 
-        {/* How to Pay Card */}
-        <section className="glass rounded-[32px] p-8 md:p-10 flex flex-col gap-8 animate-in" style={{ animationDelay: '0.3s' }}>
-          <h2 className="text-primary font-black text-[12px] uppercase tracking-[0.2em] mb-2">{t("pay.howToPay")}</h2>
-
-          <div className="flex flex-col gap-10">
-            <div className="flex gap-4 md:gap-6">
-              <div className="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold shrink-0 shadow-lg shadow-primary/20">1</div>
-              <p className="text-[14px] md:text-[15px] text-foreground/80 leading-relaxed pt-1">
-                {t("pay.step1_1")}
-                <span className="font-bold text-primary"> {t("pay.recipientEmail")} </span>
-                {t("pay.step1_2")}
-                <span className="font-bold text-primary"> {t("pay.amount")} </span>
-                {t("pay.step1_3")}
-              </p>
-            </div>
-
-            <div className="flex gap-4 md:gap-6">
-              <div className="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold shrink-0 shadow-lg shadow-primary/20">2</div>
-              <p className="text-[14px] md:text-[15px] text-foreground/80 leading-relaxed pt-1">
-                {t("pay.step2_1")}
-                <span className="font-bold text-primary"> {t("pay.interac")}</span>.
-              </p>
-            </div>
-
-            <div className="flex gap-4 md:gap-6">
-              <div className="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold shrink-0 shadow-lg shadow-primary/20">3</div>
-              <div className="text-[14px] md:text-[15px] text-foreground/80 leading-relaxed pt-1">
-                <p>
-                  {t("pay.step3_1")}
-                  <span className="font-bold text-primary"> {autodeposit ? t("pay.autodeposit") : security} </span>
-                  {t("pay.step3_2")}
-                </p>
-                {message && (
-                  <p className="mt-2 opacity-80 italic">
-                    {t("pay.step3Notes_1")}
-                    <span className="font-bold text-primary"> {t("pay.notes")} </span>
-                    {t("pay.step3Notes_2")}
-                  </p>
-                )}
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* Growth CTA */}
-        <section className="w-full flex flex-col items-center gap-4 py-8 animate-in" style={{ animationDelay: '0.4s' }}>
+        <section className="w-full flex flex-col items-center gap-4 py-4 animate-in" style={{ animationDelay: '0.3s' }}>
           <p className="text-muted text-[13px] font-bold text-center">{t("pay.footerTitle")}</p>
           <Link 
             href="/"

@@ -1,10 +1,7 @@
 https://etransfer-helper.vercel.app/
 
 - [ ] link invoice
-- [ ] cant CMD A to select all
-
-- [ ] help icon on secondary page
-
+- [ ] cant CMD A to select all  
 
 - [ ] support/donate icon on both pages https://donate.stripe.com/fZu5kCbeB8vW82I8RcfAc02
 

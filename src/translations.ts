@@ -44,6 +44,8 @@ export const translations = {
     "pay.footerBtn": "Create your own QR Link",
     "common.loading": "Loading E-Transfer Helper...",
     "common.copiedShort": "COPIED",
+    "common.gotIt": "Got it",
+    "common.close": "Close",
   },
   fr: {
     "home.header": "Assistant Virement",
@@ -90,6 +92,8 @@ export const translations = {
     "pay.footerBtn": "Créez votre propre lien QR",
     "common.loading": "Chargement de l'assistant...",
     "common.copiedShort": "COPIÉ",
+    "common.gotIt": "Compris",
+    "common.close": "Fermer",
   },
 };
 
