@@ -28,6 +28,7 @@ function PaymentContent() {
   const amount = searchParams.get("amount") || "0.00";
   const email = searchParams.get("email") || "payments@etransfer-helper.com";
   const message = searchParams.get("message");
+  const invoice = searchParams.get("invoice");
   const autodeposit = searchParams.get("autodeposit") === "true";
   const security = searchParams.get("security");
 
@@ -42,16 +43,16 @@ function PaymentContent() {
     setTimeout(() => setCopiedField(null), 2000);
   };
 
-  const formattedAmount = parseFloat(amount).toLocaleString(undefined, { 
-    minimumFractionDigits: 2, 
-    maximumFractionDigits: 2 
+  const formattedAmount = parseFloat(amount).toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
   });
 
   return (
     <main className="min-h-screen flex flex-col items-center px-6 md:px-10 pt-12 md:pt-20 pb-24 gap-8">
       <Header lang={lang} onHelpClick={() => setIsHelpOpen(true)} />
 
-      <HowToPayModal 
+      <HowToPayModal
         isOpen={isHelpOpen}
         onClose={() => setIsHelpOpen(false)}
         lang={lang}
@@ -72,29 +73,29 @@ function PaymentContent() {
         {/* Transfer Information Card */}
         <section className="glass rounded-[32px] p-8 md:p-10 flex flex-col gap-6 animate-in" style={{ animationDelay: '0.1s' }}>
           <h2 className="text-primary font-black text-[12px] uppercase tracking-[0.2em] mb-2">{t("pay.transferInfo")}</h2>
-          
+
           <div className="flex flex-col gap-4">
-            <InfoCard 
-              label={t("pay.recipientEmail")} 
-              value={email} 
+            <InfoCard
+              label={t("pay.recipientEmail")}
+              value={email}
               onCopy={() => copyToClipboard(email, "email")}
               isCopied={copiedField === "email"}
               copiedLabel={t("common.copiedShort")}
               breakAll
             />
 
-            <InfoCard 
-              label={t("pay.amount")} 
-              value={`$${formattedAmount}`} 
+            <InfoCard
+              label={t("pay.amount")}
+              value={`$${formattedAmount}`}
               onCopy={() => copyToClipboard(amount, "amount")}
               isCopied={copiedField === "amount"}
               copiedLabel={t("common.copiedShort")}
             />
 
             {!autodeposit && security && (
-              <InfoCard 
-                label={t("pay.securityAnswer")} 
-                value={security} 
+              <InfoCard
+                label={t("pay.securityAnswer")}
+                value={security}
                 onCopy={() => copyToClipboard(security, "security")}
                 isCopied={copiedField === "security"}
                 copiedLabel={t("common.copiedShort")}
@@ -103,13 +104,36 @@ function PaymentContent() {
             )}
 
             {message && (
-              <InfoCard 
-                label={t("pay.notes")} 
-                value={message} 
+              <InfoCard
+                label={t("pay.notes")}
+                value={message}
                 onCopy={() => copyToClipboard(message, "message")}
                 isCopied={copiedField === "message"}
                 copiedLabel={t("common.copiedShort")}
               />
+            )}
+
+            {invoice && (
+              <a
+                href={invoice.startsWith("http://") || invoice.startsWith("https://") ? invoice : `https://${invoice}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-input rounded-2xl p-5 border border-foreground/5 flex flex-col gap-1 relative group cursor-pointer active:scale-[0.98] transition-all w-full hover:border-primary/20"
+              >
+                <div className="flex justify-between items-center">
+                  <span className="text-[10px] font-black text-muted uppercase tracking-widest">{t("pay.invoice")}</span>
+                  <div className="text-muted/40 group-hover:text-primary transition-colors">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                      <polyline points="15 3 21 3 21 9" />
+                      <line x1="10" y1="14" x2="21" y2="3" />
+                    </svg>
+                  </div>
+                </div>
+                <span className="text-[15px] md:text-[17px] font-bold text-foreground group-hover:text-primary transition-colors truncate">
+                  {invoice}
+                </span>
+              </a>
             )}
           </div>
         </section>
@@ -119,15 +143,15 @@ function PaymentContent() {
           <h2 className="text-primary font-black text-[12px] uppercase tracking-[0.2em] mb-2">{t("pay.openBankApp")}</h2>
           <div className="grid grid-cols-2 gap-4">
             {BANKS.map((bank) => (
-              <a 
-                key={bank.name} 
+              <a
+                key={bank.name}
                 href={bank.url}
                 className="bg-input border border-foreground/5 text-foreground/70 font-bold text-[13px] py-4 rounded-2xl hover:bg-primary hover:text-white transition-all flex items-center justify-center text-center shadow-sm"
                 onClick={(e) => {
                   const ua = navigator.userAgent;
                   const isAndroid = /Android/i.test(ua);
                   const isiOS = /iPhone|iPad|iPod/i.test(ua);
-                  
+
                   if (!isAndroid && !isiOS) {
                     e.preventDefault();
                     window.open(bank.web, "_blank");
@@ -136,7 +160,7 @@ function PaymentContent() {
 
                   // Deep link handling
                   const start = Date.now();
-                  
+
                   if (isAndroid) {
                     e.preventDefault();
                     // Robust Android Intent: Open app by package, fallback to Play Store if not installed
@@ -144,7 +168,7 @@ function PaymentContent() {
                     window.location.href = intent;
                   }
                   // On iOS, we let the default href (bank.url) do its thing.
-                  
+
                   setTimeout(() => {
                     const elapsed = Date.now() - start;
                     if (document.hasFocus() && elapsed < 3000) {
@@ -162,7 +186,7 @@ function PaymentContent() {
         {/* Growth CTA */}
         <section className="w-full flex flex-col items-center gap-4 py-4 animate-in" style={{ animationDelay: '0.3s' }}>
           <p className="text-muted text-[13px] font-bold text-center">{t("pay.footerTitle")}</p>
-          <Link 
+          <Link
             href="/"
             className="glass px-8 py-4 rounded-2xl text-primary font-black text-[14px] hover:scale-[1.05] active:scale-[0.95] transition-all shadow-lg border-primary/10"
           >

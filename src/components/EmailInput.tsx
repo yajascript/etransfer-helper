@@ -56,7 +56,9 @@ export function EmailInput({ value, onChange, label, placeholder, t }: EmailInpu
   return (
     <div className="flex flex-col gap-2 relative" ref={containerRef}>
       <div className="flex justify-between items-center">
-        <label className="text-[10px] font-black text-muted uppercase tracking-widest">{label}</label>
+        <label className="text-[10px] font-black text-muted uppercase tracking-widest flex items-center gap-1">
+          {label} <span className="text-primary font-bold" title="Required">*</span>
+        </label>
         {isValidEmail(value) && (
           <button 
             onClick={saveAsDefault}

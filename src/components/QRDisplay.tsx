@@ -15,11 +15,11 @@ interface QRDisplayProps {
 export function QRDisplay({ canvasRef, url, onCopy, copyFeedback, openLabel, t }: QRDisplayProps) {
   return (
     <div id="qr-result" className="glass rounded-[32px] p-8 md:p-10 flex flex-col items-center shadow-xl animate-in w-full">
-      <canvas ref={canvasRef} className="mb-8 p-4 border-4 border-foreground/5 rounded-2xl max-w-full h-auto"></canvas>
-      
+      <canvas ref={canvasRef} className="mb-6 p-4 border-4 border-foreground/5 rounded-2xl max-w-full h-auto"></canvas>
+
       <div className="w-full flex flex-col gap-4">
         <div className="flex gap-2">
-          {typeof navigator !== 'undefined' && navigator.share && (
+          {typeof navigator !== "undefined" && navigator.share && (
             <button 
               onClick={() => {
                 navigator.share({

@@ -52,7 +52,9 @@ export function AmountInput({ value, onChange, label, limitLabel, max = 25000 }:
   return (
     <div className="flex flex-col gap-2">
       <div className="flex justify-between items-center">
-        <label className="text-[10px] font-black text-muted uppercase tracking-widest">{label}</label>
+        <label className="text-[10px] font-black text-muted uppercase tracking-widest flex items-center gap-1">
+          {label} <span className="text-primary font-bold" title="Required">*</span>
+        </label>
         {isOverLimit && (
           <span className="text-[10px] font-bold text-red-500 uppercase animate-pulse">{limitLabel}: ${max.toLocaleString()}</span>
         )}

@@ -22,7 +22,10 @@ export function SecurityField({
   return (
     <div className="flex flex-col gap-2">
       <div className="flex justify-between items-center">
-        <label className="text-[10px] font-black text-muted uppercase tracking-widest">{label}</label>
+        <label className="text-[10px] font-black text-muted uppercase tracking-widest flex items-center gap-1">
+          {label}
+          {!autodeposit && <span className="text-primary font-bold" title="Required">*</span>}
+        </label>
         <div className="flex items-center gap-2">
           <span className="text-[10px] font-black text-primary uppercase tracking-widest">{autodepositLabel}</span>
           <label className="relative inline-block w-11 h-6">
