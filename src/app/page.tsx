@@ -10,7 +10,7 @@ import { SecurityField } from "@/components/SecurityField";
 import { QRDisplay } from "@/components/QRDisplay";
 
 export default function Home() {
-  const [lang, setLang] = useState<Language>("en"); // Default to English
+  const [lang, setLang] = useState<Language>("en");
   const [amount, setAmount] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -70,7 +70,7 @@ export default function Home() {
 
     const urlString = url.toString();
     setGeneratedUrl(urlString);
-    
+
     // Only set visible and scroll if it wasn't already visible
     if (!qrVisible) {
       setQrVisible(true);
@@ -105,15 +105,15 @@ export default function Home() {
 
   const clearForm = () => {
     if (confirm(t("home.clearConfirm"))) {
-      setAmount(""); 
+      setAmount("");
       const defaultEmail = localStorage.getItem("helper_default_email") || "";
       setEmail(defaultEmail);
-      setMessage(""); 
+      setMessage("");
       setSecurityAnswer("");
-      setAutodeposit(true); 
-      setQrVisible(false); 
+      setAutodeposit(true);
+      setQrVisible(false);
       setGeneratedUrl("");
-      
+
       localStorage.removeItem("helper_amount");
       localStorage.removeItem("helper_email");
       localStorage.removeItem("helper_message");
@@ -135,18 +135,18 @@ export default function Home() {
 
       <div className="w-full max-w-[440px] flex flex-col gap-6">
         <div className="glass rounded-[32px] p-8 md:p-10 flex flex-col gap-8 transition-all">
-          <AmountInput 
-            label={t("home.amountLabel")} 
+          <AmountInput
+            label={t("home.amountLabel")}
             limitLabel={t("home.maxLimit")}
-            value={amount} 
-            onChange={setAmount} 
-            max={25000} 
+            value={amount}
+            onChange={setAmount}
+            max={25000}
           />
 
-          <EmailInput 
-            label={t("home.emailLabel")} 
-            value={email} 
-            onChange={setEmail} 
+          <EmailInput
+            label={t("home.emailLabel")}
+            value={email}
+            onChange={setEmail}
             placeholder="payments@etransfer-helper.com"
             t={t}
           />
@@ -167,7 +167,7 @@ export default function Home() {
             />
           </div>
 
-          <SecurityField 
+          <SecurityField
             label={t("home.securityLabel")}
             autodepositLabel={t("home.autodeposit")}
             autodeposit={autodeposit}
@@ -177,21 +177,20 @@ export default function Home() {
             placeholder={t("home.securityPlaceholder")}
           />
 
-          <button 
-            onClick={clearForm} 
+          <button
+            onClick={clearForm}
             disabled={!isDirty}
-            className={`text-[11px] font-black uppercase tracking-[0.2em] transition-all pt-2 self-center ${
-              isDirty 
-                ? "text-muted hover:text-red-500 cursor-pointer" 
+            className={`text-[11px] font-black uppercase tracking-[0.2em] transition-all pt-2 self-center ${isDirty
+                ? "text-muted hover:text-red-500 cursor-pointer"
                 : "text-muted/20 cursor-default"
-            }`}
+              }`}
           >
             {t("home.clearBtn")}
           </button>
         </div>
 
         {qrVisible && (
-          <QRDisplay 
+          <QRDisplay
             canvasRef={canvasRef}
             url={generatedUrl}
             onCopy={copyUrl}

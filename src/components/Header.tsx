@@ -9,7 +9,7 @@ interface HeaderProps {
   onLanguageChange?: (lang: Language) => void;
 }
 
-export function Header({ lang, onLanguageChange }: HeaderProps) {
+export function Header({ lang }: HeaderProps) {
   const t = (key: TranslationKey) => getTranslation(lang, key);
   const brandName = t("home.header");
   const [first, ...rest] = brandName.split(" ");
